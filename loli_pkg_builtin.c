@@ -183,7 +183,7 @@ void loli_builtin_Boolean_to_s(loli_state *);
 void loli_builtin_Byte_to_i(loli_state *);
 void loli_builtin_Byte_to_s(loli_state *);
 void loli_builtin_ByteString_each_byte(loli_state *);
-void loli_builtin_ByteString_encode(loli_state *);
+void loli_builtin_ByteString_to_s(loli_state *);
 void loli_builtin_ByteString_size(loli_state *);
 void loli_builtin_ByteString_slice(loli_state *);
 void loli_builtin_DivisionByZeroError_new(loli_state *);
@@ -301,7 +301,7 @@ loli_call_entry_func loli_builtin_call_table[] = {
     loli_builtin_Byte_to_s,
     NULL,
     loli_builtin_ByteString_each_byte,
-    loli_builtin_ByteString_encode,
+    loli_builtin_ByteString_to_s,
     loli_builtin_ByteString_size,
     loli_builtin_ByteString_slice,
     NULL,
@@ -575,12 +575,12 @@ void loli_builtin_Byte_to_i(loli_state *s)
 
 void loli_builtin_Byte_to_s(loli_state *s)
 {
-   uint8_t integer_val = (uint8_t)loli_arg_byte(s, 0);
-   char e = integer_val;
-   char str[2] = "\0";
-   str[0] = e;
-   loli_push_string(s, str);
-   loli_return_top(s);
+    uint8_t integer_val = (uint8_t)loli_arg_byte(s, 0);
+    char e = integer_val;
+    char str[2] = "\0";
+    str[0] = e;
+    loli_push_string(s, str);
+    loli_return_top(s);
 }
 
 
@@ -599,7 +599,7 @@ void loli_builtin_ByteString_each_byte(loli_state *s)
     }
 }
 
-void loli_builtin_ByteString_encode(loli_state *s)
+void loli_builtin_ByteString_to_s(loli_state *s)
 {
     loli_bytestring_val *input_bytestring = loli_arg_bytestring(s, 0);
     const char *encode_method;
