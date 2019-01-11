@@ -13,7 +13,10 @@ list(FILTER LOLI_SRC EXCLUDE REGEX ".*loli.c$")
 add_library(libloli_obj OBJECT ${LOLI_SRC})
 add_library(libloli SHARED $<TARGET_OBJECTS:libloli_obj>)
 
-set_target_properties(libloli_obj PROPERTIES COMPILE_FLAGS "-fPIC")
+if(NOT MINGW AND NOT WIN32 AND NOT MSVC)
+  set_target_properties(libloli_obj PROPERTIES COMPILE_FLAGS "-fPIC")
+endif()
+
 set_target_properties(libloli PROPERTIES PREFIX "")
 
 add_executable(loli loli.c $<TARGET_OBJECTS:libloli_obj>)
