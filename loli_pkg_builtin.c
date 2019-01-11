@@ -677,11 +677,10 @@ void do_str_slice(loli_state *s, int is_bytestring)
         start > sv->size ||
         start > stop) {
         if (is_bytestring == 0)
-            loli_push_string(s, "");
+            loli_IndexError(s, "String index out of range");
         else
-            loli_push_bytestring(s, "", 0);
+            loli_IndexError(s, "ByteString index out of range");
 
-        loli_return_top(s);
         return;
     }
 
