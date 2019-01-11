@@ -10,7 +10,7 @@ char *loli_logo = "LL             lll iii \n"
                   "LL      oo  oo lll iii\n"
                   "LL      oo  oo lll iii\n"
                   "LLLLLLL  oooo  lll iii\n\n"
-                  "Loli programming language, v.0.5\n"
+                  "Loli programming language, v." LOLI_VERSION "\n"
                   "(c) txlyre && kqotg, www: txlyre.ml\n\n";
 
 static void usage()
