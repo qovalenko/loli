@@ -7,7 +7,7 @@ set(LOLI_MAJOR "0")
 set(LOLI_MINOR "6")
 add_definitions(-DLOLI_VERSION="${LOLI_MAJOR}.${LOLI_MINOR}")
 
-file(GLOB_RECURSE LOLI_SRC *.c *.h)
+file(GLOB_RECURSE LOLI_SRC src/*.c src/*.h)
 list(FILTER LOLI_SRC EXCLUDE REGEX ".*loli.c$")
 
 file(GLOB_RECURSE REMOVE_CMAKE "cmake-build-debug/*")
