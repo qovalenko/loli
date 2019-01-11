@@ -65,7 +65,6 @@ void repl(void)
   loli_config config;
   loli_config_init(&config);
   loli_state *state = loli_new_state(&config);
-  const char *output;
   int result;
 
   printf(loli_logo);
@@ -75,7 +74,7 @@ void repl(void)
   if(strcmp(expr,"")==0 || strcmp(expr,"\n")==0 || strcmp(expr,"\r\n")==0){
     goto repeat;
   }
-  
+
   result = loli_load_string(state, "<repl>", expr);
 
   if (result)

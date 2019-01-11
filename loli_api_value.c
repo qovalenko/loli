@@ -85,18 +85,26 @@ int loli_arg_isa(loli_state *s, int index, uint16_t class_id)
     int base = FLAGS_TO_BASE(value);
     uint16_t result_id;
 
-    if (base == V_VARIANT_BASE || base == V_INSTANCE_BASE ||
-        base == V_FOREIGN_BASE)
-        result_id = (uint16_t)value->value.container->class_id;
-    else if (base == V_EMPTY_VARIANT_BASE)
-        result_id = (uint16_t)value->value.integer;
-    else if (base == V_COROUTINE_BASE)
-        result_id = LOLI_ID_COROUTINE;
-    else if (base == V_UNIT_BASE)
-        result_id = LOLI_ID_UNIT;
-    else
-         
-        result_id = (uint16_t)base;
+    switch (base) {
+        case V_VARIANT_BASE:
+        case V_INSTANCE_BASE:
+        case V_FOREIGN_BASE:
+            result_id = (uint16_t) value->value.container->class_id;
+            break;
+        case V_EMPTY_VARIANT_BASE:
+            result_id = (uint16_t) value->value.integer;
+            break;
+        case V_COROUTINE_BASE:
+            result_id = LOLI_ID_COROUTINE;
+            break;
+
+        case V_UNIT_BASE:
+            result_id = LOLI_ID_UNIT;
+            break;
+
+        default:
+            result_id = (uint16_t) base;
+    }
 
     return result_id == class_id;
 }
@@ -396,25 +404,41 @@ static void destroy_coroutine(loli_value *v)
 
 void loli_value_destroy(loli_value *v)
 {
-    int base = FLAGS_TO_BASE(v);
+    switch (FLAGS_TO_BASE(v)) {
+        case V_LIST_BASE:
+        case V_TUPLE_BASE:
+            destroy_list(v);
+            break;
 
-    if (base == V_LIST_BASE || base == V_TUPLE_BASE)
-        destroy_list(v);
-    else if (base == V_VARIANT_BASE || base == V_INSTANCE_BASE)
-        destroy_container(v);
-    else if (base == V_STRING_BASE || base == V_BYTESTRING_BASE)
-        destroy_string(v);
-    else if (base == V_FUNCTION_BASE)
-        destroy_function(v);
-    else if (base == V_HASH_BASE)
-        loli_destroy_hash(v);
-    else if (base == V_FILE_BASE)
-        destroy_file(v);
-    else if (base == V_COROUTINE_BASE)
-        destroy_coroutine(v);
-    else if (base == V_FOREIGN_BASE) {
-        v->value.foreign->destroy_func(v->value.generic);
-        loli_free(v->value.generic);
+        case V_VARIANT_BASE:
+        case V_INSTANCE_BASE:
+            destroy_container(v);
+            break;
+
+        case V_STRING_BASE:
+        case V_BYTESTRING_BASE:
+            destroy_string(v);
+            break;
+
+        case V_FUNCTION_BASE:
+            destroy_function(v);
+            break;
+
+        case V_HASH_BASE:
+            loli_destroy_hash(v);
+            break;
+
+        case V_FILE_BASE:
+            destroy_file(v);
+
+        case V_COROUTINE_BASE:
+            destroy_coroutine(v);
+            break;
+
+        case V_FOREIGN_BASE:
+            v->value.foreign->destroy_func(v->value.generic);
+            loli_free(v->value.generic);
+            break;
     }
 }
 
@@ -487,75 +511,71 @@ int loli_value_compare_raw(loli_state *s, int *depth, loli_value *left,
     int left_base = FLAGS_TO_BASE(left);
     int right_base = FLAGS_TO_BASE(right);
 
-    if (*depth == 100)
-        loli_RuntimeError(s, "Infinite loop in comparison.");
+    if (*depth == 100) loli_RuntimeError(s, "Infinite loop in comparison.");
 
-    if (left_base != right_base)
-        return 0;
-    else if (left_base == V_INTEGER_BASE || left_base == V_BOOLEAN_BASE)
-        return left->value.integer == right->value.integer;
-    else if (left_base == V_DOUBLE_BASE)
-        return left->value.doubleval == right->value.doubleval;
-    else if (left_base == V_STRING_BASE)
-        return strcmp(left->value.string->string,
-                right->value.string->string) == 0;
-    else if (left_base == V_BYTESTRING_BASE) {
-        loli_string_val *left_sv = left->value.string;
-        loli_string_val *right_sv = right->value.string;
-        char *left_s = left_sv->string;
-        char *right_s = right_sv->string;
-        int left_size = left_sv->size;
-        return (left_size == right_sv->size &&
-                memcmp(left_s, right_s, left_size) == 0);
-    }
-    else if (left_base == V_LIST_BASE || left_base == V_TUPLE_BASE) {
-        return subvalue_eq(s, depth, left, right);
-    }
-    else if (left_base == V_HASH_BASE) {
-        loli_hash_val *left_hash = left->value.hash;
-        loli_hash_val *right_hash = right->value.hash;
+    if (left_base != right_base) return 0;
 
-        int ok = 1;
-        if (left_hash->num_entries != right_hash->num_entries)
-            ok = 0;
+    switch (left_base) {
+        case V_INTEGER_BASE:
+        case V_BOOLEAN_BASE:
+            return left->value.integer == right->value.integer;
 
-        if (ok) {
-            (*depth)++;
-            int i;
-            for (i = 0;i < left_hash->num_bins;i++) {
-                loli_hash_entry *left = left_hash->bins[i];
-                if (left) {
-                    loli_value *right = loli_hash_get(s, right_hash,
-                            left->boxed_key);
+        case V_STRING_BASE:
+            return strcmp(left->value.string->string, right->value.string->string) == 0;
 
-                    if (right == NULL ||
-                        loli_value_compare_raw(s, depth, left->record,
-                                right) == 0) {
-                        ok = 0;
-                        break;
+        case V_BYTESTRING_BASE: {
+            loli_string_val *left_sv = left->value.string;
+            loli_string_val *right_sv = right->value.string;
+
+            char *left_s = left_sv->string;
+            char *right_s = right_sv->string;
+            int left_size = left_sv->size;
+
+            return (left_size == right_sv->size && memcmp(left_s, right_s, left_size) == 0);
+        }
+
+        case V_LIST_BASE:
+        case V_TUPLE_BASE:
+            return subvalue_eq(s, depth, left, right);
+
+        case V_HASH_BASE: {
+            loli_hash_val *left_hash = left->value.hash;
+            loli_hash_val *right_hash = right->value.hash;
+
+            int ok = 1;
+            if (left_hash->num_entries != right_hash->num_entries)
+                ok = 0;
+
+            if (ok) {
+                (*depth)++;
+                for (int i = 0; i < left_hash->num_bins; i++) {
+                    loli_hash_entry *left = left_hash->bins[i];
+                    if (left) {
+                        loli_value *right = loli_hash_get(s, right_hash,
+                                                          left->boxed_key);
+
+                        if (right == NULL ||
+                            loli_value_compare_raw(s, depth, left->record, right) == 0) {
+                            ok = 0;
+                            break;
+                        }
                     }
                 }
+                (*depth)--;
             }
-            (*depth)--;
-        }
-        return ok;
-    }
-    else if (left_base == V_VARIANT_BASE) {
-        int ok;
-        if (left->value.container->class_id ==
-            right->value.container->class_id)
-            ok = subvalue_eq(s, depth, left, right);
-        else
-            ok = 0;
+            return ok;
+        } case V_VARIANT_BASE: {
+            int ok = 0;
+            if (left->value.container->class_id == right->value.container->class_id)
+                ok = subvalue_eq(s, depth, left, right);
 
-        return ok;
+            return ok;
+        } case V_EMPTY_VARIANT_BASE:
+            return left->value.integer == right->value.integer;
+
+        default:
+            return left->value.generic == right->value.generic;
     }
-    else if (left_base == V_EMPTY_VARIANT_BASE)
-         
-        return left->value.integer == right->value.integer;
-    else
-         
-        return left->value.generic == right->value.generic;
 }
 
 int loli_value_compare(loli_state *s, loli_value *left, loli_value *right)
