@@ -4,7 +4,7 @@ project("Loli" C)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ldl -s -O2 -Wall")
 
 set(LOLI_MAJOR "0")
-set(LOLI_MINOR "5")
+set(LOLI_MINOR "6")
 add_definitions(-DLOLI_VERSION="${LOLI_MAJOR}.${LOLI_MINOR}")
 
 file(GLOB_RECURSE LOLI_SRC *.c *.h)
