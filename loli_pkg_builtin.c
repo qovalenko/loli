@@ -1600,8 +1600,7 @@ void loli_builtin_List_slice(loli_state *s)
     if (stop > size ||
         start > size ||
         start > stop) {
-        loli_push_list(s, 0);
-        loli_return_top(s);
+        loli_IndexError(s, "List index out of range");
         return;
     }
 
