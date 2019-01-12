@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.6.0)
 project("Loli" C)
 
 if(NOT MINGW AND NOT WIN32)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ldl -s -O2 -Wall")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -ldl -s -O2 -Wall")
 else()
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s -O2 -Wall")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -s -O2 -Wall")
 endif()
 
 set(LOLI_MAJOR "0")
