@@ -8,7 +8,7 @@ Install ``CMake`` 3.6 or later and execute commands:
 
 ```bash
 mkdir ./build               # make build directory
-cmake -S ./ -B ./build      # genirate make file to build directiry
+cmake -S ./ -B ./build      # generate make file to build directory
 cd build && make            # compile loli
 ```
 
