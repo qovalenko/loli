@@ -1,2 +1,6 @@
+# CLion files
 /.idea/**
 /cmake-build-debug/**
+
+# Build files
+/build/**
