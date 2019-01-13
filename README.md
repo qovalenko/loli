@@ -13,3 +13,7 @@ cd build && make            # compile loli
 ```
 
 Then in the build folder you can find files: ``loli`` & ``libloli.so`` (``loli.exe`` & ``libloli.dll`` on windows)
+
+## Examples
+
+You can find examples at: http://txlyre.ml/files/loli/examples/
