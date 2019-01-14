@@ -2712,23 +2712,19 @@ static void new_builtin_file(loli_state *s, FILE *source, const char *mode)
 
 void loli_builtin_input(loli_state *s)
 {
-    if(loli_arg_count(s)>=1)
-      loli_builtin__say(s);
+    if(loli_arg_count(s) >= 1)
+        loli_builtin__say(s);
     
-    loli_push_file(s, stdin, "r");
-    loli_file_val *filev = loli_as_file(loli_stack_get_top(s));
-    filev->is_builtin = 1;
-    loli_stack_drop_top(s);
+    char input_buffer[256];    
     
-    loli_msgbuf *vm_buffer = loli_msgbuf_get(s);
-    FILE *f = loli_file_for_read(s, filev);
-    int byte_count = read_file_line(vm_buffer, f);
-    char *text = loli_mb_raw(vm_buffer);
-    size_t ln = strlen(text) - 1;
-    if (*text && text[ln] == '\n') 
-      text[ln] = '\0';
-      byte_count -= 1;
-    loli_push_bytestring(s, text, byte_count);
+    fgets(input_buffer, 256, stdin);
+    
+    size_t input_size = strlen(input_buffer);
+    if (*input_buffer && input_buffer[input_size - 1] == '\n') 
+        input_buffer[input_size - 1] = '\0';
+        input_size -= 1;
+    
+    loli_push_bytestring(s, input_buffer, input_size);
     loli_return_top(s);
 }
 
