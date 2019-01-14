@@ -1057,12 +1057,22 @@ static void do_print(loli_vm_state *vm, FILE *target, loli_value *source,int nl)
 
 void loli_builtin__say(loli_vm_state *vm)
 {
-    do_print(vm, stdout, loli_arg_value(vm, 0), 0);
+    loli_container_val *list_val = loli_arg_container(vm, 0);
+    
+    int i;
+    for (i = 0;i < list_val->num_values; i++) {
+        do_print(vm, stdout, loli_con_get(list_val, i), 0);
+    }
 }
 
 void loli_builtin__sayln(loli_vm_state *vm)
 {
-    do_print(vm, stdout, loli_arg_value(vm, 0), 1);
+    loli_container_val *list_val = loli_arg_container(vm, 0);
+    
+    int i;
+    for (i = 0;i < list_val->num_values; i++) {
+        do_print(vm, stdout, loli_con_get(list_val, i), 1);
+    }
 }
 
 void loli_stdout_print(loli_vm_state *vm)
