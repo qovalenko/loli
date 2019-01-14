@@ -284,8 +284,8 @@ void loli_builtin_String_to_bytestring(loli_state *);
 void loli_builtin_String_trim(loli_state *);
 void loli_builtin_String_upper(loli_state *);
 void loli_builtin_ValueError_new(loli_state *);
-void loli_builtin__println(loli_state *);
-void loli_builtin__print(loli_state *);
+void loli_builtin__sayln(loli_state *);
+void loli_builtin__say(loli_state *);
 void loli_builtin_input(loli_state *);
 void loli_builtin__calltrace(loli_state *);
 void loli_builtin_var_stdin(loli_state *);
@@ -426,8 +426,8 @@ loli_call_entry_func loli_builtin_call_table[] = {
     NULL,
     NULL,
     loli_builtin_ValueError_new,
-    loli_builtin__println,
-    loli_builtin__print,
+    loli_builtin__sayln,
+    loli_builtin__say,
     loli_builtin_input,
     loli_builtin__calltrace,
     loli_builtin_var_stdin,
@@ -2713,7 +2713,7 @@ static void new_builtin_file(loli_state *s, FILE *source, const char *mode)
 void loli_builtin_input(loli_state *s)
 {
     if(loli_arg_count(s)>=1)
-      loli_builtin__print(s);
+      loli_builtin__say(s);
     
     loli_push_file(s, stdin, "r");
     loli_file_val *filev = loli_as_file(loli_stack_get_top(s));

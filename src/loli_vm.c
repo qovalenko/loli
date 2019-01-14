@@ -1055,12 +1055,12 @@ static void do_print(loli_vm_state *vm, FILE *target, loli_value *source,int nl)
     loli_return_unit(vm);
 }
 
-void loli_builtin__print(loli_vm_state *vm)
+void loli_builtin__say(loli_vm_state *vm)
 {
     do_print(vm, stdout, loli_arg_value(vm, 0), 0);
 }
 
-void loli_builtin__println(loli_vm_state *vm)
+void loli_builtin__sayln(loli_vm_state *vm)
 {
     do_print(vm, stdout, loli_arg_value(vm, 0), 1);
 }
