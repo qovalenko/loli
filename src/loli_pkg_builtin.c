@@ -1886,39 +1886,37 @@ void loli_builtin_String_format(loli_state *s)
 
 void loli_builtin_String_len(loli_state *s)
 {
-  loli_value *input_arg = loli_arg_value(s, 0);
-  int input_size = input_arg->value.string->size;
-  loli_return_integer(s, input_size);
+    loli_value *input_arg = loli_arg_value(s, 0);
+    int input_size = input_arg->value.string->size;
+    loli_return_integer(s, input_size);
 }
 
 void loli_builtin_String_char_at(loli_state *s)
 {
-  loli_value *input_arg = loli_arg_value(s, 0);
-  loli_value *pos_arg = loli_arg_value(s, 1);
-  char *input_raw_str = input_arg->value.string->string;
-  int pos_raw_arg = pos_arg->value.integer;
-  int input_size = input_arg->value.string->size;
-  char e;
-  
-  
-  
-  if(pos_raw_arg > input_size){
+    loli_value *input_arg = loli_arg_value(s, 0);
+    loli_value *pos_arg = loli_arg_value(s, 1);
     
-    
-    loli_IndexError(s, "String index out of range");
-    loli_return_byte(s, 0);
-  } else if(pos_raw_arg < 0){
-    if(pos_raw_arg+input_size < 0 || pos_raw_arg+input_size > input_size){
-      loli_IndexError(s, "String index out of range");
-      loli_return_byte(s, 0);
-      return;      
+    char *input_raw_str = input_arg->value.string->string;
+    char e;
+        
+    int pos_raw_arg = pos_arg->value.integer;
+    int input_size = input_arg->value.string->size;
+  
+    if(pos_raw_arg > input_size || pos_raw_arg == input_size){
+        loli_IndexError(s, "String index out of range");
+        loli_return_byte(s, 0);
+    } else if(pos_raw_arg < 0){
+        if(pos_raw_arg+input_size < 0 || pos_raw_arg+input_size > input_size){
+            loli_IndexError(s, "String index out of range");
+            loli_return_byte(s, 0);
+            return;      
+        }
+        e = input_raw_str[pos_raw_arg+input_size];
+        loli_return_byte(s, (uint8_t)e);
+    } else {
+        e = input_raw_str[pos_raw_arg];
+        loli_return_byte(s, (uint8_t)e);
     }
-    e = input_raw_str[pos_raw_arg+input_size];
-    loli_return_byte(s, (uint8_t)e);
-  } else {
-    e = input_raw_str[pos_raw_arg];
-    loli_return_byte(s, (uint8_t)e);
-  }
 }
 
 void loli_builtin_String_ends_with(loli_state *s)
