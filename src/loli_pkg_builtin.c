@@ -71,7 +71,7 @@ const char *loli_builtin_info_table[] = {
     ,"m\0<new>\0(String): IndexError"
     ,"N\04Integer\0"
     ,"m\0to_bool\0(Integer): Boolean"
-    ,"m\0to_byte\0(Integer): Byte"
+    ,"m\0to_b\0(Integer): Byte"
     ,"m\0to_d\0(Integer): Double"
     ,"m\0to_s\0(Integer): String"
     ,"N\01IOError\0< Exception"
