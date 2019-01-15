@@ -2737,7 +2737,7 @@ void loli_builtin_range(loli_state *s)
         start = loli_arg_integer(s, 0);
         end = loli_arg_integer(s, 1);
     } else {
-        start = 0
+        start = 0;
         end = loli_arg_integer(s, 0);
     }
 
