@@ -677,8 +677,7 @@ void do_str_slice(loli_state *s, int is_bytestring)
     if (is_bytestring == 0) {
         if (follower_table[(unsigned char)raw[start]] == -1 ||
             follower_table[(unsigned char)raw[stop]] == -1) {
-            loli_push_string(s, "");
-            loli_return_top(s);
+            loli_ValueError(s, "Not a valid string");
             return;
         }
     }
