@@ -5,8 +5,6 @@ set(CMAKE_C_STANDARD 11)
 
 if(NOT MINGW AND NOT WIN32)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ldl -s -O2 -Wall")
-elseif($ENV{CI})
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ldl -s -O2 -Wall")
 else()
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s -O2 -Wall")
 endif()
