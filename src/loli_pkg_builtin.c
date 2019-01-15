@@ -150,6 +150,7 @@ const char *loli_builtin_info_table[] = {
     ,"F\0sayln\0[A](A...)"
     ,"F\0say\0[A](A...)"
     ,"F\0input\0(*String): ByteString"
+    ,"F\0range\0(Integer, *Integer): List[Integer]"
     ,"F\0calltrace\0: List[String]"
     ,"R\0stdin\0File"
     ,"R\0stderr\0File"
@@ -287,6 +288,7 @@ void loli_builtin_ValueError_new(loli_state *);
 void loli_builtin__sayln(loli_state *);
 void loli_builtin__say(loli_state *);
 void loli_builtin_input(loli_state *);
+void loli_builtin_range(loli_state *);
 void loli_builtin__calltrace(loli_state *);
 void loli_builtin_var_stdin(loli_state *);
 void loli_builtin_var_stderr(loli_state *);
@@ -429,6 +431,7 @@ loli_call_entry_func loli_builtin_call_table[] = {
     loli_builtin__sayln,
     loli_builtin__say,
     loli_builtin_input,
+    loli_builtin_range,
     loli_builtin__calltrace,
     loli_builtin_var_stdin,
     loli_builtin_var_stderr,
@@ -2723,6 +2726,36 @@ void loli_builtin_input(loli_state *s)
         input_size -= 1;
     
     loli_push_bytestring(s, input_buffer, input_size);
+    loli_return_top(s);
+}
+
+void loli_builtin_range(loli_state *s) 
+{
+    int64_t start;
+    int64_t end;
+    if(loli_arg_count(s) == 2) {
+        start = loli_arg_integer(s, 0);
+        end = loli_arg_integer(s, 1);
+    } else {
+        start = 0
+        end = loli_arg_integer(s, 0);
+    }
+
+    if(end <= 0) {
+        loli_push_list(s, 0);
+        loli_return_top(s);
+        return;
+    }
+
+    loli_container_val *con = loli_push_list(s, end);
+    int64_t i;
+    loli_value *n;
+
+    for (i = start;start < end;i++) {
+        loli_push_integer(s, i);
+        loli_con_set_from_stack(s, con, loli_con_size(con));
+    }
+
     loli_return_top(s);
 }
 
