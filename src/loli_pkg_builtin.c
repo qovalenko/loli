@@ -23,7 +23,7 @@ const char *loli_builtin_info_table[] = {
     ,"m\0to_s\0(Byte): String"
     ,"N\04ByteString\0"
     ,"m\0each_byte\0(ByteString,Function(Byte))"
-    ,"m\0to_s\0(ByteString,*String): Option[String]"
+    ,"m\0to_s\0(ByteString): String"
     ,"m\0len\0(ByteString): Integer"
     ,"m\0slice\0(ByteString,*Integer,*Integer): ByteString"
     ,"N\01DivisionByZeroError\0< Exception"
@@ -605,32 +605,18 @@ void loli_builtin_ByteString_each_byte(loli_state *s)
 void loli_builtin_ByteString_to_s(loli_state *s)
 {
     loli_bytestring_val *input_bytestring = loli_arg_bytestring(s, 0);
-    const char *encode_method;
-
-    if (loli_arg_count(s) == 2)
-        encode_method = loli_arg_string_raw(s, 1);
-    else
-        encode_method = "error";
 
     char *byte_buffer = NULL;
 
-    if (strcmp(encode_method, "error") == 0) {
-        byte_buffer = loli_bytestring_raw(input_bytestring);
-        int byte_buffer_size = loli_bytestring_length(input_bytestring);
+    byte_buffer = loli_bytestring_raw(input_bytestring);
+    int byte_buffer_size = loli_bytestring_length(input_bytestring);
 
-        if (loli_is_valid_sized_utf8(byte_buffer, byte_buffer_size) == 0) {
-            loli_return_none(s);
-            return;
-        }
-    }
-    else {
-        loli_return_none(s);
+    if (loli_is_valid_sized_utf8(byte_buffer, byte_buffer_size) == 0) {
+        loli_ValueError(s, "Not a valid utf-8 string");
         return;
     }
-
-    loli_container_val *variant = loli_push_some(s);
+    
     loli_push_string(s, byte_buffer);
-    loli_con_set_from_stack(s, variant, 0);
     loli_return_top(s);
 }
 
