@@ -39,6 +39,11 @@ char *loli_##name##_string_raw(__VA_ARGS__) \
 DEFINE_GETTERS(arg, ->call_chain->start[index], loli_state *source, int index)
 DEFINE_GETTERS(as, , loli_value *source)
 
+char* loli_get_version()
+{
+    return LOLI_VERSION;
+}
+
 loli_value *loli_arg_value(loli_state *s, int index)
 {
     return s->call_chain->start[index];

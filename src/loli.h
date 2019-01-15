@@ -29,6 +29,7 @@ typedef struct loli_config_ {
     char sipkey[16];
     void *data;
 } loli_config;
+char *loli_get_version();
 void loli_config_init(loli_config *config);
 loli_config *loli_config_get(loli_state *s);
 loli_state *loli_new_state(loli_config *config);
