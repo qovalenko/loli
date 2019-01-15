@@ -18,7 +18,7 @@ fn range(start: Integer, end: *Integer = -1): List[Integer]
 }
 ```
 
-# Make everythink, it will work everywhere
+# Make everything, it will work everywhere
 Loli applications can run in any operation system and architecture. It can be embedded into HTML code and be used to make wonderfull websites. Write once. Run everywhere.
 
 ## Building
