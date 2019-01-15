@@ -1,6 +1,5 @@
-<p align="center"><img src="http://newtoo.ucoz.net/user-content/Loli.png" /><p/>
-<h2 align="center"><sup>Embedded programming language</sup> <img src="http://newtoo.ucoz.net/user-content/build-passes-badge.png" /></h2>
-
+![logo](loli.png)
+## Embedded programming language [![Build Status](https://travis-ci.org/txlyre/loli.svg?branch=master)](https://travis-ci.org/txlyre/loli)
 
 ```rust
 fn range(start: Integer, end: *Integer = -1): List[Integer]
@@ -19,7 +18,9 @@ fn range(start: Integer, end: *Integer = -1): List[Integer]
 ```
 
 # Make everything, it will work everywhere
-Loli applications can run in any operation system and architecture. It can be embedded into HTML code and be used to make wonderfull websites. Write once. Run everywhere.
+Loli applications can run in any operation system and architecture. It can be embedded into HTML code and be used to make wonderfull websites. 
+
+Write once. Run everywhere!
 
 ## Building
 
