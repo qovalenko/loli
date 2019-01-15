@@ -2,6 +2,7 @@ language: c
 dist: xenial
 
 script:
+  - "export CC=clang"
   - "mkdir ./build"
   - "cmake -S ../ -B ./"
   - "make"
