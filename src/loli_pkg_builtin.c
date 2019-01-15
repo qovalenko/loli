@@ -2742,20 +2742,26 @@ void loli_builtin_range(loli_state *s)
     }
 
     if(end <= 0) {
-        loli_push_list(s, 0);
-        loli_return_top(s);
+        loli_ValueError(s, "End should be positive non-zero integer");
+        return;
+    }
+    
+    if(start > end) {
+        loli_ValueError(s, "Start should not be bigger than end");
         return;
     }
 
-    loli_container_val *con = loli_push_list(s, end);
-    int64_t i;
-    loli_value *n;
-
-    for (i = start;start < end;i++) {
+    loli_container_val *con = loli_push_list(s, start == 0 ? end+1 : end);
+    int64_t i = start;
+    int64_t c = 0;
+    
+    while (i <= end) {
         loli_push_integer(s, i);
-        loli_con_set_from_stack(s, con, loli_con_size(con));
+        loli_con_set_from_stack(s, con, c);
+        i++;
+        c++;
     }
-
+    
     loli_return_top(s);
 }
 
