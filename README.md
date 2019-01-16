@@ -34,6 +34,9 @@ cd build && make            # compile loli
 
 Then in the build directory you can find files: ``loli`` & ``libloli.so`` (``loli.exe`` & ``libloli.dll`` on Windows)
 
+## Documentation
+Documentation is available at https://txlyre.github.io/loli/
+
 ## Examples
 
 - Simple OpenGL application <https://github.com/VenityStudio/LoliGL#example-creating-window>
