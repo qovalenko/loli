@@ -68,6 +68,8 @@
             <li><a href="#classes">Classes</a></li>
             <li><a href="#exceptions">Exceptions</a></li>
             <li><a href="#generics">Generics</a></li>
+            <li><a href="#import">Import</a></li>
+            <li><a href="#enums">Enums</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -423,7 +425,57 @@ They must be a single capital letter, must be declared before use, and yet there
 }
 
 Stack(1).push(2).push(3) # [1, 2, 3]
-</code></pre></div>
+</code></pre>
+
+<h2 id="import">Import</h2>
+<p>Import system is very similar to Python.  </p>
+<pre><code class="rust">import sys
+
+sys.exit()
+
+import package
+
+import package as pkg
+
+import (somefn, somevar) package
+
+import &quot;folder/package&quot;
+</code></pre>
+
+<h3 id="import-paths">Import paths</h3>
+<p>For default paths tried in the following order:  </p>
+<pre><code>./&lt;name&gt;.li
+./&lt;name&gt;.(dll/so)
+
+./pkg/&lt;name&gt;/&lt;name&gt;.li
+./pkg/&lt;name&gt;/&lt;name&gt;.(dll/so)
+
+&lt;original root&gt;/pkg/&lt;name&gt;/&lt;name&gt;.li
+&lt;original root&gt;/pkg/&lt;name&gt;/&lt;name&gt;.(dll/so)
+</code></pre>
+
+<p>If a module executes code, the code is run only the first time the module is loaded. </p>
+<h2 id="enums">Enums</h2>
+<p>Enums are a datatype composed of a fixed set of variant classes. A variant class can take any number of types (including the enum itself), or can be empty.<br />
+Enums declarations can include methods as well as variants.  </p>
+<pre><code class="rust">enum Rgb {
+  Red,
+  Green,
+  Blue
+
+  fn is_blue: Boolean {
+    match self: {
+      case Blue: return true
+      else:      return false
+    }
+  }
+}
+</code></pre>
+
+<p>Since enums aren't inheritable, their methods don't need qualifiers like with user-defined classes.<br />
+By default, variants of an enum are flat. Variants of a flat enum can be referenced directly.<br />
+In contrast, the <code>scoped</code> qualifier makes it so that variants of an enum are only accessible through the enum name.<br />
+Also variants support varargs and keyargs, but no optargs because they are not actually functions.    </p></div>
         </div>
 
         <footer class="col-md-12">
@@ -506,5 +558,5 @@ Stack(1).push(2).push(3) # [1, 2, 3]
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-01-16 16:46:38
+Build Date UTC : 2019-01-16 17:05:52
 -->
