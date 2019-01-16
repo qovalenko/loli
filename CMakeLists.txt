@@ -10,7 +10,7 @@ else()
 endif()
 
 set(LOLI_MAJOR "0")
-set(LOLI_MINOR "6")
+set(LOLI_MINOR "7")
 add_definitions(-DLOLI_VERSION="${LOLI_MAJOR}.${LOLI_MINOR}")
 
 file(GLOB_RECURSE LOLI_SRC src/*.c src/*.h)
