@@ -80,6 +80,7 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#built-in-modules-reference">Built-in modules reference</a></li>
             <li><a href="#builtin">builtin</a></li>
+            <li><a href="#random">random</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -396,7 +397,16 @@ If <code>self</code> contains a <code>Success</code>, produces <code>Right(B)</c
 <h3 id="variable-stderr-stderr-file">Variable stderr <code>stderr: File</code><a class="headerlink" href="#variable-stderr-stderr-file" title="Permanent link">&para;</a></h3>
 <p>Provides a wrapper around the <code>stderr</code>.  </p>
 <h3 id="variable-stdout-stdout-file">Variable stdout <code>stdout: File</code><a class="headerlink" href="#variable-stdout-stdout-file" title="Permanent link">&para;</a></h3>
-<p>Provides a wrapper around the <code>stdout</code>.</p></div>
+<p>Provides a wrapper around the <code>stdout</code>.</p>
+<h2 id="random">random<a class="headerlink" href="#random" title="Permanent link">&para;</a></h2>
+<p>The <code>random</code> package provides access to a pseudo-random number generation.  </p>
+<h3 id="class-random">Class Random<a class="headerlink" href="#class-random" title="Permanent link">&para;</a></h3>
+<p>The <code>Random</code> class provides access to the random number generator. Each instance is completely separate from all others.<br />
+The constructor for this class takes a seed. If the seed provided is 0 or less, then the current time is used instead.  </p>
+<h4 id="fn-seed-integer-0-random">fn <new>(seed: *Integer = 0): Random<a class="headerlink" href="#fn-seed-integer-0-random" title="Permanent link">&para;</a></h4>
+<h4 id="fn-betweenlower-integer-upper-integer-integer">fn between(lower: Integer, upper: Integer): Integer<a class="headerlink" href="#fn-betweenlower-integer-upper-integer-integer" title="Permanent link">&para;</a></h4>
+<p>Generate a random <code>Integer</code> value between <code>lower</code> and <code>upper</code>.<br />
+Raises <code>ValueError</code> is raised if the range is empty, or reversed.  </p></div>
         </div>
 
         <footer class="col-md-12">
