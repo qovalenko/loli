@@ -134,7 +134,7 @@ const char *loli_builtin_info_table[] = {
     ,"m\0char_at\0(String,Integer): Byte" 
     ,"m\0len\0(String): Integer" 
     ,"m\0lstrip\0(String,String): String"
-    ,"m\0to_i\0(String): Option[Integer]"
+    ,"m\0to_i\0(String): Integer"
     ,"m\0replace\0(String,String,String): String"
     ,"m\0rstrip\0(String,String): String"
     ,"m\0slice\0(String,*Integer,*Integer): String"
@@ -273,7 +273,7 @@ void loli_builtin_String_lower(loli_state *);
 void loli_builtin_String_char_at(loli_state *);
 void loli_builtin_String_len(loli_state *);
 void loli_builtin_String_lstrip(loli_state *);
-void loli_builtin_String_parse_i(loli_state *);
+void loli_builtin_String_to_i(loli_state *);
 void loli_builtin_String_replace(loli_state *);
 void loli_builtin_String_rstrip(loli_state *);
 void loli_builtin_String_slice(loli_state *);
@@ -414,7 +414,7 @@ loli_call_entry_func loli_builtin_call_table[] = {
     loli_builtin_String_char_at,
     loli_builtin_String_len,
     loli_builtin_String_lstrip,
-    loli_builtin_String_parse_i,
+    loli_builtin_String_to_i,
     loli_builtin_String_replace,
     loli_builtin_String_rstrip,
     loli_builtin_String_slice,
@@ -2199,7 +2199,7 @@ void loli_builtin_String_lstrip(loli_state *s)
     loli_return_top(s);
 }
 
-void loli_builtin_String_parse_i(loli_state *s)
+void loli_builtin_String_to_i(loli_state *s)
 {
     char *input = loli_arg_string_raw(s, 0);
     uint64_t value = 0;
@@ -2232,7 +2232,7 @@ void loli_builtin_String_parse_i(loli_state *s)
     if (value > ((uint64_t)INT64_MAX + is_negative) ||
         *input != '\0' ||
         (rounds == 0 && leading_zeroes == 0)) {
-        loli_return_none(s);
+        loli_ValueError(s, "Invalid Integer literal: '%s'", input);
     }
     else {
         int64_t signed_value;
@@ -2242,10 +2242,7 @@ void loli_builtin_String_parse_i(loli_state *s)
         else
             signed_value = -(int64_t)value;
 
-        loli_container_val *variant = loli_push_some(s);
-
         loli_push_integer(s, signed_value);
-        loli_con_set_from_stack(s, variant, 0);
 
         loli_return_top(s);
     }
