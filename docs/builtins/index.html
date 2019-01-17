@@ -81,6 +81,8 @@
         <li class="main active"><a href="#built-in-modules-reference">Built-in modules reference</a></li>
             <li><a href="#builtin">builtin</a></li>
             <li><a href="#random">random</a></li>
+            <li><a href="#sys">sys</a></li>
+            <li><a href="#time">time</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -406,7 +408,31 @@ The constructor for this class takes a seed. If the seed provided is 0 or less, 
 <h4 id="fn-seed-integer-0-random">fn <new>(seed: *Integer = 0): Random<a class="headerlink" href="#fn-seed-integer-0-random" title="Permanent link">&para;</a></h4>
 <h4 id="fn-betweenlower-integer-upper-integer-integer">fn between(lower: Integer, upper: Integer): Integer<a class="headerlink" href="#fn-betweenlower-integer-upper-integer-integer" title="Permanent link">&para;</a></h4>
 <p>Generate a random <code>Integer</code> value between <code>lower</code> and <code>upper</code>.<br />
-Raises <code>ValueError</code> is raised if the range is empty, or reversed.  </p></div>
+Raises <code>ValueError</code> is raised if the range is empty, or reversed.</p>
+<h2 id="sys">sys<a class="headerlink" href="#sys" title="Permanent link">&para;</a></h2>
+<h3 id="fn-exitexit_code-integer">fn exit(exit_code: *Integer)<a class="headerlink" href="#fn-exitexit_code-integer" title="Permanent link">&para;</a></h3>
+<p>Stop execution of the program and return code <code>exit_code</code>.  </p>
+<h3 id="fn-getenvname-string-optionstring">fn getenv(name: String): Option[String]<a class="headerlink" href="#fn-getenvname-string-optionstring" title="Permanent link">&para;</a></h3>
+<p>Search the environment for <code>name</code>, returning either a <code>Some</code> with the contents, or <code>None</code>.  </p>
+<h3 id="fn-recursion_limit-integer">fn recursion_limit: Integer<a class="headerlink" href="#fn-recursion_limit-integer" title="Permanent link">&para;</a></h3>
+<p>Return the current recursion limit.   </p>
+<h3 id="fn-set_recursion_limitlimit-integer">fn set_recursion_limit(limit: Integer)<a class="headerlink" href="#fn-set_recursion_limitlimit-integer" title="Permanent link">&para;</a></h3>
+<p>Attempt to set <code>limit</code> as the maximum recursion limit.<br />
+Raises <code>ValueError</code> if <code>limit</code> is lower than the current recursion depth or an negative value.   </p>
+<h3 id="variable-argv-argv-liststring">Variable argv <code>argv: List[String]</code><a class="headerlink" href="#variable-argv-argv-liststring" title="Permanent link">&para;</a></h3>
+<p>This contains arguments sent to the program through the command-line. If interpreter was not invoked from the command-line then this is empty.  </p>
+<h2 id="time">time<a class="headerlink" href="#time" title="Permanent link">&para;</a></h2>
+<p>The <code>time</code> package provides access to basic time information on the system.   </p>
+<h3 id="class-time">Class Time<a class="headerlink" href="#class-time" title="Permanent link">&para;</a></h3>
+<p>Instances of this class represent a single point in time. This class also includes static methods to provide a few extra features.  </p>
+<h4 id="sta-fn-clock-double">sta fn clock: Double<a class="headerlink" href="#sta-fn-clock-double" title="Permanent link">&para;</a></h4>
+<p>Returns the number of seconds of CPU time the interpreter has used.  </p>
+<h4 id="sta-fn-now-time">sta fn now: Time<a class="headerlink" href="#sta-fn-now-time" title="Permanent link">&para;</a></h4>
+<p>Returns a <code>Time</code> instance representing the current system time.  </p>
+<h4 id="fn-to_sformat-string-y-m-d-hms-z-string">fn to_s(format: *String = "%Y-%m-%d %H:%M:%S %z"): String<a class="headerlink" href="#fn-to_sformat-string-y-m-d-hms-z-string" title="Permanent link">&para;</a></h4>
+<p>Return a <code>String</code> representation of a <code>Time</code> instance in <code>format</code> format.  </p>
+<h4 id="fn-since_epoch-integer">fn since_epoch: Integer<a class="headerlink" href="#fn-since_epoch-integer" title="Permanent link">&para;</a></h4>
+<p>Returns the value of <code>self</code> as a number of seconds since the epoch.    </p></div>
         </div>
 
         <footer class="col-md-12">
