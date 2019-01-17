@@ -18,7 +18,7 @@ const char *loli_time_info_table[] = {
     ,"C\04Time\0"
     ,"m\0clock\0: Double"
     ,"m\0now\0: Time"
-    ,"m\0to_s\0(Time): String"
+    ,"m\0to_s\0(Time, *String): String"
     ,"m\0since_epoch\0(Time): Integer"
     ,"Z"
 };
@@ -62,9 +62,13 @@ void loli_time_Time_now(loli_state *s)
 void loli_time_Time_to_s(loli_state *s)
 {
     loli_time_Time *t = ARG_Time(s, 0);
+    char *format = "%Y-%m-%d %H:%M:%S %z";
+    if(loli_arg_count(s) == 2)
+        format = loli_arg_string_raw(s, 1);   
+      
     char buf[64];
 
-    strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S %z", &t->local);
+    strftime(buf, sizeof(buf), format, &t->local);
 
     loli_push_string(s, buf);
     loli_return_top(s);
