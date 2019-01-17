@@ -265,7 +265,6 @@ void loli_builtin_RuntimeError_new(loli_state *);
 void loli_builtin_String_format(loli_state *);
 void loli_builtin_String_ends_with(loli_state *);
 void loli_builtin_String_find(loli_state *);
-void loli_builtin_String_html_encode(loli_state *);
 void loli_builtin_String_is_alnum(loli_state *);
 void loli_builtin_String_is_alpha(loli_state *);
 void loli_builtin_String_is_digit(loli_state *);
@@ -1993,22 +1992,6 @@ void loli_builtin_String_find(loli_state *s)
     }
     else
         loli_return_none(s);
-}
-
-void loli_builtin_String_html_encode(loli_state *s)
-{
-    loli_value *input_arg = loli_arg_value(s, 0);
-    const char *raw = loli_as_string_raw(input_arg);
-    loli_msgbuf *msgbuf = loli_msgbuf_get(s);
-
-     
-    if (loli_mb_html_escape(msgbuf, raw) == raw)
-         
-        loli_return_value(s, input_arg);
-    else {
-        loli_push_string(s, loli_mb_raw(msgbuf));
-        loli_return_top(s);
-    }
 }
 
 #define CTYPE_WRAP(WRAP_NAME, WRAPPED_CALL) \

@@ -196,7 +196,6 @@ void loli_mb_add_value(loli_msgbuf *msgbuf, loli_state *s, loli_value *value);
 loli_msgbuf *loli_mb_flush(loli_msgbuf *msgbuf);
 const char *loli_mb_raw(loli_msgbuf *msgbuf);
 int loli_mb_pos(loli_msgbuf *msgbuf);
-const char *loli_mb_html_escape(loli_msgbuf *msgbuf, const char *input);
 const char *loli_mb_sprintf(loli_msgbuf *msgbuf, const char *format, ...);
 loli_msgbuf *loli_msgbuf_get(loli_state *);
 #define LOLI_FOREIGN_HEADER \
