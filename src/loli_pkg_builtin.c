@@ -1010,6 +1010,8 @@ void loli_builtin_Hash_delete(loli_state *s)
     if (loli_hash_take(s, hash_val, key)) {
         loli_stack_drop_top(s);
         loli_stack_drop_top(s);
+    } else {
+        loli_KeyError(s, "Key is not exists");
     }
 
     loli_return_unit(s);
