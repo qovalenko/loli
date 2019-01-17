@@ -1,5 +1,6 @@
 
 #include <time.h>
+#include <string.h>
 
 #include "loli.h"
 
@@ -66,6 +67,9 @@ void loli_time_Time_to_s(loli_state *s)
     if(loli_arg_count(s) == 2)
         format = loli_arg_string_raw(s, 1);   
       
+    if(strlen(format) >= 64)
+        format[62] = '\0';
+    
     char buf[64];
 
     strftime(buf, sizeof(buf), format, &t->local);
