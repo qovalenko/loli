@@ -39,6 +39,6 @@ Documentation is available at https://loli-foundation.github.io/loli/
 
 ## Examples
 
-- Simple OpenGL application <https://github.com/VenityStudio/LoliGL#example-creating-window>
+- Simple OpenGL application <https://github.com/loli-foundation/LoliGL#example-creating-window>
 - Brainfuck interpreter <http://txlyre.ml/files/loli/examples/bf.li>
 - Text fucker <http://txlyre.ml/files/loli/examples/text_fucker.li>
