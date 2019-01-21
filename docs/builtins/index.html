@@ -414,6 +414,8 @@ Raises <code>ValueError</code> is raised if the range is empty, or reversed.</p>
 <p>Stop execution of the program and return code <code>exit_code</code>.  </p>
 <h3 id="fn-getenvname-string-optionstring">fn getenv(name: String): Option[String]<a class="headerlink" href="#fn-getenvname-string-optionstring" title="Permanent link">&para;</a></h3>
 <p>Search the environment for <code>name</code>, returning either a <code>Some</code> with the contents, or <code>None</code>.  </p>
+<h3 id="fn-setenvname-string-value-string-boolean">fn setenv(name: String, value: String): Boolean<a class="headerlink" href="#fn-setenvname-string-value-string-boolean" title="Permanent link">&para;</a></h3>
+<p>Set environment variable <code>name</code> to <code>value</code>, on success return <code>true</code>, <code>false</code> otherwise.  </p>
 <h3 id="fn-recursion_limit-integer">fn recursion_limit: Integer<a class="headerlink" href="#fn-recursion_limit-integer" title="Permanent link">&para;</a></h3>
 <p>Return the current recursion limit.   </p>
 <h3 id="fn-set_recursion_limitlimit-integer">fn set_recursion_limit(limit: Integer)<a class="headerlink" href="#fn-set_recursion_limitlimit-integer" title="Permanent link">&para;</a></h3>
