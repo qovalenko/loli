@@ -6,10 +6,32 @@
 #include "loli.h"
 #include "loli_vm.h"
 
+#ifdef _WIN32
+#ifndef setenv
+int setenv(char *name, char *value, int overwrite)
+{
+    char *env = getenv(name);
+    if (env && !overwrite) {
+        return 0;
+    }
+    size_t size = strlen(name)+strlen(name)+2;
+    char *buffer = (char *)malloc(size);
+    if (!buffer) {
+        return 0;
+    }
+    sprintf(buffer, "%s=%s", name, value);
+    int result = putenv(buffer);
+    free(buffer);
+    return result;
+}
+#endif
+#endif
+
 const char *loli_sys_info_table[] = {
     "\0\0"
     ,"F\0exit\0(*Integer)"
     ,"F\0getenv\0(String): Option[String]"
+    ,"F\0setenv\0(String, String): Boolean"
     ,"F\0recursion_limit\0: Integer"
     ,"F\0set_recursion_limit\0(Integer)"
     ,"R\0argv\0List[String]"
@@ -17,6 +39,7 @@ const char *loli_sys_info_table[] = {
 };
 void loli_sys__exit(loli_state *s);
 void loli_sys__getenv(loli_state *);
+void loli_sys__setenv(loli_state *);
 void loli_sys__recursion_limit(loli_state *);
 void loli_sys__set_recursion_limit(loli_state *);
 void loli_sys_var_argv(loli_state *);
@@ -24,6 +47,7 @@ loli_call_entry_func loli_sys_call_table[] = {
     NULL,
     loli_sys__exit,
     loli_sys__getenv,
+    loli_sys__setenv,
     loli_sys__recursion_limit,
     loli_sys__set_recursion_limit,
     loli_sys_var_argv,
@@ -55,6 +79,18 @@ void loli_sys__getenv(loli_state *s)
     }
     else
         loli_return_none(s);
+}
+
+void loli_sys__setenv(loli_state *s)
+{
+    char *env = loli_arg_string_raw(s, 0);  
+    char *value = loli_arg_string_raw(s, 1);
+    
+    if (setenv(env, value, 1) == 0) {
+        loli_return_boolean(s, 1);
+    }
+    else
+        loli_return_boolean(s, 0);
 }
 
 void loli_sys__recursion_limit(loli_state *s)
