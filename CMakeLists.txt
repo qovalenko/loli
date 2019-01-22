@@ -2,12 +2,7 @@ cmake_minimum_required(VERSION 3.6.0)
 project("Loli" C)
 
 set(CMAKE_C_STANDARD 11)
-
-if(NOT MINGW AND NOT WIN32)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ldl -s -O2 -Wall")
-else()
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s -O2 -Wall")
-endif()
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s -O2 -Wall")
 
 set(LOLI_MAJOR "0")
 set(LOLI_MINOR "7")
@@ -28,3 +23,9 @@ set_target_properties(libloli PROPERTIES PREFIX "")
 add_executable(loli src/loli.c $<TARGET_OBJECTS:libloli_obj>)
 target_link_libraries(loli m)
 target_link_libraries(libloli m)
+
+# Fix for UNIX systems
+if (UNIX)
+   target_link_libraries(loli ${CMAKE_DL_LIBS})
+   target_link_libraries(libloli ${CMAKE_DL_LIBS})
+endif(UNIX)
