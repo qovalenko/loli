@@ -2690,7 +2690,7 @@ void loli_builtin_input(loli_state *s)
     size_t input_size = strlen(input_buffer);
     if (*input_buffer && input_buffer[input_size - 1] == '\n') 
         input_buffer[input_size - 1] = '\0';
-        input_size -= 1;
+    input_size -= 1;
     
     loli_push_bytestring(s, input_buffer, input_size);
     loli_return_top(s);
