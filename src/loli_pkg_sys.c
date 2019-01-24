@@ -5,6 +5,7 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <dir.h>
 
 #include "loli.h"
 #include "loli_vm.h"
@@ -32,6 +33,9 @@ int setenv(char *name, char *value, int overwrite)
 
 const char *loli_sys_info_table[] = {
     "\0\0"
+    ,"F\0rmdir\0(String): Boolean"
+    ,"F\0remove\0(String): Boolean"
+    ,"F\0mkdir\0(String): Boolean"
     ,"F\0exists\0(String): Boolean"
     ,"F\0is_dir\0(String): Boolean"
     ,"F\0is_file\0(String): Boolean"
@@ -43,6 +47,9 @@ const char *loli_sys_info_table[] = {
     ,"R\0argv\0List[String]"
     ,"Z"
 };
+void loli_sys__rmdir(loli_state *s);
+void loli_sys__remove(loli_state *s);
+void loli_sys__mkdir(loli_state *s);
 void loli_sys__exists(loli_state *s);
 void loli_sys__is_dir(loli_state *s);
 void loli_sys__is_file(loli_state *s);
@@ -54,6 +61,9 @@ void loli_sys__set_recursion_limit(loli_state *);
 void loli_sys_var_argv(loli_state *);
 loli_call_entry_func loli_sys_call_table[] = {
     NULL,
+    loli_sys__rmdir,
+    loli_sys__remove,
+    loli_sys__mkdir,
     loli_sys__exists,
     loli_sys__is_dir,
     loli_sys__is_file,
@@ -64,6 +74,60 @@ loli_call_entry_func loli_sys_call_table[] = {
     loli_sys__set_recursion_limit,
     loli_sys_var_argv,
 };
+
+void loli_sys__rmdir(loli_state *s)
+{
+    char *path = loli_arg_string_raw(s, 0);
+    
+    if (rmdir(path) != 0) {
+        char buffer[128];
+#ifdef _WIN32
+        strerror_s(buffer, sizeof(buffer), errno);
+#else
+        strerror_r(errno, buffer, sizeof(buffer));
+#endif
+        loli_IOError(s, "Errno %d: %s (%s).", errno, buffer, path);
+        loli_return_boolean(s, 0); // hmmmmmmmm
+    }
+    
+    loli_return_boolean(s, 1);
+}
+
+void loli_sys__remove(loli_state *s)
+{
+    char *path = loli_arg_string_raw(s, 0);
+    
+    if (remove(path) != 0) {
+        char buffer[128];
+#ifdef _WIN32
+        strerror_s(buffer, sizeof(buffer), errno);
+#else
+        strerror_r(errno, buffer, sizeof(buffer));
+#endif
+        loli_IOError(s, "Errno %d: %s (%s).", errno, buffer, path);
+        loli_return_boolean(s, 0); // hmmmmmmmm
+    }
+    
+    loli_return_boolean(s, 1);
+}
+
+void loli_sys__mkdir(loli_state *s)
+{
+    char *path = loli_arg_string_raw(s, 0);
+    
+    if (mkdir(path) != 0) {
+        char buffer[128];
+#ifdef _WIN32
+        strerror_s(buffer, sizeof(buffer), errno);
+#else
+        strerror_r(errno, buffer, sizeof(buffer));
+#endif
+        loli_IOError(s, "Errno %d: %s (%s).", errno, buffer, path);
+        loli_return_boolean(s, 0); // hmmmmmmmm
+    }
+    
+    loli_return_boolean(s, 1);
+}
 
 void loli_sys__exists(loli_state *s)
 {
