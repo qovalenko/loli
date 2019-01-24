@@ -86,6 +86,9 @@ extern loli_call_entry_func loli_time_call_table[];
 extern const char *loli_math_info_table[];
 extern loli_call_entry_func loli_math_call_table[];
 
+extern const char *loli_hash_info_table[];
+extern loli_call_entry_func loli_hash_call_table[];
+
 void loli_init_pkg_builtin(loli_symtab *);
 
 void loli_config_init(loli_config *conf)
@@ -168,7 +171,7 @@ loli_state *loli_new_state(loli_config *config)
      
     create_main_func(parser);
 
-    loli_module_register(parser->vm, "sys",loli_sys_info_table,
+    loli_module_register(parser->vm, "sys", loli_sys_info_table,
             loli_sys_call_table);
     loli_module_register(parser->vm, "random", loli_random_info_table,
             loli_random_call_table);
@@ -176,6 +179,8 @@ loli_state *loli_new_state(loli_config *config)
             loli_time_call_table);
     loli_module_register(parser->vm, "math", loli_math_info_table,
             loli_math_call_table);
+    loli_module_register(parser->vm, "hash", loli_hash_info_table,
+            loli_hash_call_table);     
 
     parser->executing = 0;
     parser->content_to_parse = 0;
