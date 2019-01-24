@@ -410,6 +410,12 @@ The constructor for this class takes a seed. If the seed provided is 0 or less, 
 <p>Generate a random <code>Integer</code> value between <code>lower</code> and <code>upper</code>.<br />
 Raises <code>ValueError</code> is raised if the range is empty, or reversed.</p>
 <h2 id="sys">sys<a class="headerlink" href="#sys" title="Permanent link">&para;</a></h2>
+<h3 id="fn-existspath-string-boolean">fn exists(path: String): Boolean<a class="headerlink" href="#fn-existspath-string-boolean" title="Permanent link">&para;</a></h3>
+<p>Returns <code>true</code>, if <code>path</code> is a existing file or directory, <code>false</code> otherwise.  </p>
+<h3 id="fn-is_dirpath-string-boolean">fn is_dir(path: String): Boolean<a class="headerlink" href="#fn-is_dirpath-string-boolean" title="Permanent link">&para;</a></h3>
+<p>Returns <code>true</code>, if <code>path</code> is a existing directory, <code>false</code> otherwise.  </p>
+<h3 id="fn-is_filepath-string-boolean">fn is_file(path: String): Boolean<a class="headerlink" href="#fn-is_filepath-string-boolean" title="Permanent link">&para;</a></h3>
+<p>Returns <code>true</code>, if <code>path</code> is a existing file, <code>false</code> otherwise.  </p>
 <h3 id="fn-exitexit_code-integer">fn exit(exit_code: *Integer)<a class="headerlink" href="#fn-exitexit_code-integer" title="Permanent link">&para;</a></h3>
 <p>Stop execution of the program and return code <code>exit_code</code>.  </p>
 <h3 id="fn-getenvname-string-optionstring">fn getenv(name: String): Option[String]<a class="headerlink" href="#fn-getenvname-string-optionstring" title="Permanent link">&para;</a></h3>
