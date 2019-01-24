@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.6.0)
 project("Loli" C)
 
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s -O2 -Wall")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s -O2")
 
 set(LOLI_MAJOR "0")
 set(LOLI_MINOR "7")
