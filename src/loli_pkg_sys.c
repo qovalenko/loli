@@ -6,6 +6,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <dir.h>
+#include <dirent.h> 
 
 #include "loli.h"
 #include "loli_vm.h"
@@ -33,6 +34,7 @@ int setenv(char *name, char *value, int overwrite)
 
 const char *loli_sys_info_table[] = {
     "\0\0"
+    ,"F\0listdir\0(String): List[String]"
     ,"F\0rmdir\0(String): Boolean"
     ,"F\0remove\0(String): Boolean"
     ,"F\0mkdir\0(String): Boolean"
@@ -47,6 +49,7 @@ const char *loli_sys_info_table[] = {
     ,"R\0argv\0List[String]"
     ,"Z"
 };
+void loli_sys__listdir(loli_state *s);
 void loli_sys__rmdir(loli_state *s);
 void loli_sys__remove(loli_state *s);
 void loli_sys__mkdir(loli_state *s);
@@ -61,6 +64,7 @@ void loli_sys__set_recursion_limit(loli_state *);
 void loli_sys_var_argv(loli_state *);
 loli_call_entry_func loli_sys_call_table[] = {
     NULL,
+    loli_sys__listdir,
     loli_sys__rmdir,
     loli_sys__remove,
     loli_sys__mkdir,
@@ -75,6 +79,55 @@ loli_call_entry_func loli_sys_call_table[] = {
     loli_sys_var_argv,
 };
 
+void loli_sys__listdir(loli_state *s)
+{
+    char *path = loli_arg_string_raw(s, 0);
+    
+    DIR *dp;
+    struct dirent *dir;
+    
+    dp = opendir(path);
+    
+    if (!dp) {
+        char buffer[128];
+#ifdef _WIN32
+        strerror_s(buffer, sizeof(buffer), errno);
+#else
+        strerror_r(errno, buffer, sizeof(buffer));
+#endif
+        loli_IOError(s, "Errno %d: %s (%s).", errno, buffer, path);
+    }
+    
+    int lv_size = 0;
+    int i = 0;
+    
+    while ((dir = readdir(dp)) != NULL) {
+        lv_size++;
+    }
+    rewinddir(dp);
+    
+    loli_container_val *lv = loli_push_list(s, lv_size);
+    
+    while ((dir = readdir(dp)) != NULL && i < lv_size) {
+        loli_push_string(s, dir->d_name);
+        loli_con_set_from_stack(s, lv, i); 
+        
+        i++;       
+    }
+    closedir(dp);
+    
+    if (errno) {
+        char buffer[128];
+#ifdef _WIN32
+        strerror_s(buffer, sizeof(buffer), errno);
+#else
+        strerror_r(errno, buffer, sizeof(buffer));
+#endif
+        loli_IOError(s, "Errno %d: %s (%s).", errno, buffer, path);    
+    }
+    
+    loli_return_top(s);
+}
 void loli_sys__rmdir(loli_state *s)
 {
     char *path = loli_arg_string_raw(s, 0);
