@@ -410,12 +410,15 @@ The constructor for this class takes a seed. If the seed provided is 0 or less, 
 <p>Generate a random <code>Integer</code> value between <code>lower</code> and <code>upper</code>.<br />
 Raises <code>ValueError</code> is raised if the range is empty, or reversed.</p>
 <h2 id="sys">sys<a class="headerlink" href="#sys" title="Permanent link">&para;</a></h2>
+<h3 id="fn-lisdirpath-string-liststring">fn lisdir(path: String): List[String]<a class="headerlink" href="#fn-lisdirpath-string-liststring" title="Permanent link">&para;</a></h3>
+<p>Returns list of files in <code>path</code>. <br />
+Raises IOError if <code>path</code> is not exists or accessible.  </p>
 <h3 id="fn-rmdirpath-string-boolean">fn rmdir(path: String): Boolean<a class="headerlink" href="#fn-rmdirpath-string-boolean" title="Permanent link">&para;</a></h3>
 <p>Removes a directory whose name is given by <code>path</code>. The directory shall be removed only if it is an empty directory.<br />
-Raises IOError if <code>path</code> is not exists or accesablee, otherwise returns <code>true</code>.  </p>
+Raises IOError if <code>path</code> is not exists or accessible, otherwise returns <code>true</code>.  </p>
 <h3 id="fn-removepath-string-boolean">fn remove(path: String): Boolean<a class="headerlink" href="#fn-removepath-string-boolean" title="Permanent link">&para;</a></h3>
 <p>Removes a file whose name is given by <code>path</code>. <br />
-Raises IOError if <code>path</code> is not exists or accesable, otherwise returns <code>true</code>.  </p>
+Raises IOError if <code>path</code> is not exists or accessible, otherwise returns <code>true</code>.  </p>
 <h3 id="fn-mkdirpath-string-boolean">fn mkdir(path: String): Boolean<a class="headerlink" href="#fn-mkdirpath-string-boolean" title="Permanent link">&para;</a></h3>
 <p>Creates a file whose name is given by <code>path</code>. <br />
 Raises IOError if <code>path</code> is not a valid path name, otherwise returns <code>true</code>.   </p>
