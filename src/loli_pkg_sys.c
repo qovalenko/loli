@@ -5,7 +5,6 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/stat.h>
-#include <dir.h>
 #include <dirent.h> 
 
 #include "loli.h"
