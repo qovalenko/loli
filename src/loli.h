@@ -49,7 +49,6 @@ int loli_import_library_data(loli_state *s, const char *target,
                              loli_call_entry_func *call_table);
 int loli_import_string(loli_state *s, const char *target, const char *content);
 void loli_import_use_local_dir(loli_state *s, const char *dir);
-void loli_import_use_local_dir(loli_state *s, const char *dir);
 const char *loli_import_current_root_dir(loli_state *s);
 #define LOLI_ID_UNSET         0
 #define LOLI_ID_INTEGER       1
