@@ -81,7 +81,7 @@ def _download_safe(local_name, url):
     _error("{}: download failed: {}".format(local_name,e))
   
   if not os.path.isfile(local_name):
-    _error("{}: download failed")
+    _error("{}: download failed".format(local_name))
   
 
 def _check_catalog():
