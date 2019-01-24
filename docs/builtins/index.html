@@ -83,6 +83,7 @@
             <li><a href="#random">random</a></li>
             <li><a href="#sys">sys</a></li>
             <li><a href="#time">time</a></li>
+            <li><a href="#hash">hash</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -452,7 +453,13 @@ Raises <code>ValueError</code> if <code>limit</code> is lower than the current r
 <h4 id="fn-to_sformat-string-y-m-d-hms-z-string">fn to_s(format: *String = "%Y-%m-%d %H:%M:%S %z"): String<a class="headerlink" href="#fn-to_sformat-string-y-m-d-hms-z-string" title="Permanent link">&para;</a></h4>
 <p>Return a <code>String</code> representation of a <code>Time</code> instance in <code>format</code> format.  </p>
 <h4 id="fn-since_epoch-integer">fn since_epoch: Integer<a class="headerlink" href="#fn-since_epoch-integer" title="Permanent link">&para;</a></h4>
-<p>Returns the value of <code>self</code> as a number of seconds since the epoch.    </p></div>
+<p>Returns the value of <code>self</code> as a number of seconds since the epoch.    </p>
+<h2 id="hash">hash<a class="headerlink" href="#hash" title="Permanent link">&para;</a></h2>
+<p>The <code>hash</code> provides access to hash-functions, e.g. <code>md5</code>.</p>
+<h3 id="fn-md5input-string-string">fn md5(input: String): String<a class="headerlink" href="#fn-md5input-string-string" title="Permanent link">&para;</a></h3>
+<p>Returns a md5 hash from <code>input</code>.  </p>
+<h3 id="fn-sha1input-string-string">fn sha1(input: String): String<a class="headerlink" href="#fn-sha1input-string-string" title="Permanent link">&para;</a></h3>
+<p>Returns a sha1 hash from <code>input</code>.</p></div>
         </div>
 
         <footer class="col-md-12">
