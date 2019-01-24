@@ -167,7 +167,11 @@ void loli_sys__mkdir(loli_state *s)
 {
     char *path = loli_arg_string_raw(s, 0);
     
+#ifdef _WIN32
     if (mkdir(path) != 0) {
+#else
+    if (mkdir(path, 777) != 0) {
+#endif
         char buffer[128];
 #ifdef _WIN32
         strerror_s(buffer, sizeof(buffer), errno);
