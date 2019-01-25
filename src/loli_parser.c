@@ -773,7 +773,7 @@ static loli_module_entry *load_module(loli_parse_state *parser,
 #else
         char *error;
         if ((error = dlerror()) != NULL)  {
-          loli_mb_add_fmt(msgbuf, "    cannot import shared library '%s.%s': %d\n", name, LOLI_LIB_SUFFIX, error);
+          loli_mb_add_fmt(msgbuf, "    cannot import shared library '%s.%s': %s\n", name, LOLI_LIB_SUFFIX, error);
         }
 #endif    
         
