@@ -68,10 +68,12 @@ void repl(void)
     loli_config_init(&config);
     loli_state *state = loli_new_state(&config);
     int result;
+	char *output;
 
     printf(loli_logo);
 
     for (;;) {
+		output = NULL;
         printf("loli> ");
 
         fgets(expr, 256, stdin);
@@ -82,8 +84,26 @@ void repl(void)
 
         result = loli_load_string(state, "<repl>", expr);
 
-        if (result) result = loli_parse_content(state);
-        if (result == 0) fputs(loli_error_message(state), stderr);
+        if (result) {
+            result = loli_parse_expr(state, &output);
+        } else { 
+            fputs(loli_error_message(state), stderr);
+            continue;
+		}
+        if (result && output) {
+            printf("%s\n", output);
+            continue;
+        }
+
+        result = loli_load_string(state, "<repl>", expr);
+        if (result) {
+            result = loli_parse_content(state);
+        }
+				
+        if (result == 0) {
+            fputs(loli_error_message(state), stderr);
+            continue;
+        }
     }
 }
 
