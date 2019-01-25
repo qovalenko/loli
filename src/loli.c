@@ -89,7 +89,7 @@ void repl(void)
         } else { 
             fputs(loli_error_message(state), stderr);
             continue;
-		}
+        }
         if (result && output) {
             printf("%s\n", output);
             continue;
