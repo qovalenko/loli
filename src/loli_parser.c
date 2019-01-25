@@ -764,6 +764,19 @@ static loli_module_entry *load_module(loli_parse_state *parser,
     if (parser->ims->last_import == NULL) {
         loli_msgbuf *msgbuf = loli_mb_flush(parser->msgbuf);
         loli_mb_add_fmt(msgbuf, "Cannot import '%s':\n", name);
+        
+#ifdef _WIN32
+       int error;
+       if ((error = GetLastError()) != 0)  {
+          loli_mb_add_fmt(msgbuf, "    cannot import shared library '%s.%s': %d\n", name, LOLI_LIB_SUFFIX, error);
+        }
+#else
+        char *error;
+        if ((error = dlerror()) != NULL)  {
+          loli_mb_add_fmt(msgbuf, "    cannot import shared library '%s.%s': %d\n", name, LOLI_LIB_SUFFIX, error);
+        }
+#endif    
+        
         loli_mb_add_fmt(msgbuf, "    no preloaded package '%s'", name);
 
         loli_buffer_u16 *b = parser->data_stack;
@@ -777,8 +790,7 @@ static loli_module_entry *load_module(loli_parse_state *parser,
 
         loli_raise_syn(parser->raiser, loli_mb_raw(msgbuf));
     }
-    else
-         
+    else        
         loli_u16_set_pos(parser->data_stack, 0);
 
     return parser->ims->last_import;
@@ -5037,10 +5049,11 @@ int loli_parse_expr(loli_state *s, const char **text)
             loli_mb_add_fmt(msgbuf, "(^T): ", sym->type);
 
              
-            if (reg->flags & V_STRING_FLAG)
+            if (reg->flags & V_STRING_FLAG && reg->value.string)
                 loli_mb_add_fmt(msgbuf, "\"%s\"", reg->value.string->string);
             else
                 loli_mb_add_value(msgbuf, s, reg);
+
 
             *text = loli_mb_raw(msgbuf);
         }
