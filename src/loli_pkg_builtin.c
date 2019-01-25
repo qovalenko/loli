@@ -78,7 +78,8 @@ const char *loli_builtin_info_table[] = {
     ,"m\0<new>\0(String): IOError"
     ,"N\01KeyError\0< Exception"
     ,"m\0<new>\0(String): KeyError"
-    ,"N\025List\0[A]"
+    ,"N\026List\0[A]"
+    ,"m\0append\0[A](List[A], List[A]): List[A]"
     ,"m\0clear\0[A](List[A])"
     ,"m\0count\0[A](List[A],Function(A=>Boolean)): Integer"
     ,"m\0delete_at\0[A](List[A],Integer)"
@@ -172,13 +173,13 @@ const char *loli_builtin_info_table[] = {
 #define IOError_OFFSET 60
 #define KeyError_OFFSET 62
 #define List_OFFSET 64
-#define Option_OFFSET 86
-#define Result_OFFSET 99
-#define RuntimeError_OFFSET 106
-#define String_OFFSET 108
-#define Tuple_OFFSET 129
-#define ValueError_OFFSET 130
-#define toplevel_OFFSET 132
+#define Option_OFFSET 87
+#define Result_OFFSET 100
+#define RuntimeError_OFFSET 107
+#define String_OFFSET 109
+#define Tuple_OFFSET 130
+#define ValueError_OFFSET 131
+#define toplevel_OFFSET 133
 void loli_builtin_Boolean_to_i(loli_state *);
 void loli_builtin_Boolean_to_s(loli_state *);
 void loli_builtin_Byte_to_i(loli_state *);
@@ -226,6 +227,7 @@ void loli_builtin_Integer_to_d(loli_state *);
 void loli_builtin_Integer_to_s(loli_state *);
 void loli_builtin_IOError_new(loli_state *);
 void loli_builtin_KeyError_new(loli_state *);
+void loli_builtin_List_append(loli_state *);
 void loli_builtin_List_clear(loli_state *);
 void loli_builtin_List_count(loli_state *);
 void loli_builtin_List_delete_at(loli_state *);
@@ -358,6 +360,7 @@ loli_call_entry_func loli_builtin_call_table[] = {
     NULL,
     loli_builtin_KeyError_new,
     NULL,
+    loli_builtin_List_append,
     loli_builtin_List_clear,
     loli_builtin_List_count,
     loli_builtin_List_delete_at,
@@ -1250,6 +1253,22 @@ void loli_builtin_KeyError_new(loli_state *s)
     return_exception(s, LOLI_ID_KEYERROR);
 }
 
+void loli_builtin_List_append(loli_state *s)
+{
+    loli_value *list_arg = loli_arg_value(s, 0);
+    loli_value *list_arg_a = loli_arg_value(s, 1);
+    
+    loli_container_val *list_val = loli_as_container(list_arg);
+    loli_container_val *list_val_a = loli_as_container(list_arg_a);
+    
+    int i;
+    
+    for (i = 0;i < list_val_a->num_values;i++) {
+        loli_list_insert(list_val, loli_con_size(list_val), list_val_a->values[i]);
+    }
+
+    loli_return_value(s, list_arg);
+}
 
 void loli_builtin_List_clear(loli_state *s)
 {
