@@ -504,8 +504,8 @@ static void add_value_to_msgbuf(loli_vm_state *vm, loli_msgbuf *msgbuf,
         loli_mb_add(msgbuf, variant_cls->name);
     }
     else {
-			  if (!v || !v->value.container)
-				    return;
+		if (!v || !v->value.container)
+		    return;
         loli_container_val *cv = v->value.container;
         loli_class *cls = vm->gs->class_table[cv->class_id];
 				
