@@ -68,12 +68,12 @@ void repl(void)
     loli_config_init(&config);
     loli_state *state = loli_new_state(&config);
     int result;
-	char *output;
+    char *output;
 
     printf(loli_logo);
 
     for (;;) {
-		output = NULL;
+        output = NULL;
         printf("loli> ");
 
         fgets(expr, 256, stdin);
