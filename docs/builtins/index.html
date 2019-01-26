@@ -291,6 +291,9 @@ The <code>$1</code> type is a special type that allows this method to work with 
 <h3 id="class-string">Class String<a class="headerlink" href="#class-string" title="Permanent link">&para;</a></h3>
 <p>The <code>String</code> class provides a wrapper over a C <code>char *</code>. The <code>String</code> class is guaranteed to have a single <code>\0</code> terminator. Additionally, a <code>String</code> is guaranteed to always be valid utf-8.<br />
 The methods on the <code>String</code> class treat the underlying <code>String</code> as being immutable, and thus always create a new <code>String</code> instead of modifying the existing one.  </p>
+<h4 id="fn-char_atindex-integer-byte">fn char_at(index: Integer): Byte<a class="headerlink" href="#fn-char_atindex-integer-byte" title="Permanent link">&para;</a></h4>
+<p>Returns a characted at <code>index</code> in the <code>self</code>. If <code>index</code> is negative, then it is considered an offset from the end of the <code>self</code>.<br />
+Raises <code>IndexError</code> if <code>index</code> is not within <code>self</code>.  </p>
 <h4 id="fn-formatargs-1-string">fn format(args: $1...): String<a class="headerlink" href="#fn-formatargs-1-string" title="Permanent link">&para;</a></h4>
 <p>This creates a new <code>String</code> by processing self as a format. Format specifiers must be between braces (<code>{}</code>), and must be between <code>0</code> and <code>99</code>. Each format specifier is replaced with the according argument, with the first argument being at 0, the second at 1, and so on.<br />
 Raises <code>ValueError</code> if a format specifier is malformed or has too many digits.<br />
