@@ -318,7 +318,10 @@ Otherwise, this returns <code>None</code>.  </p>
 <p>This walks through <code>self</code> from left to right, stopping on the first utf-8 chunk that is not found within <code>to_strip</code>. The result is a newly-made copy of <code>self</code> without the elements within <code>to_strip</code> at the front.  </p>
 <h4 id="fn-to_i-integer_3">fn to_i: Integer<a class="headerlink" href="#fn-to_i-integer_3" title="Permanent link">&para;</a></h4>
 <p>Attempts to convert <code>self</code> into an <code>Integer</code>. <code>self</code> is parsed as a base-10 encoded value.<br />
-If the value is not a valid Integer, <code>ValueError</code> will raised.  </p>
+If the value is not a valid <code>Integer</code>, <code>ValueError</code> will raised. </p>
+<h4 id="fn-to_d-double_1">fn to_d: Double<a class="headerlink" href="#fn-to_d-double_1" title="Permanent link">&para;</a></h4>
+<p>Attempts to convert <code>self</code> into an <code>Double</code>. <code>self</code> is parsed as a base-10 encoded value.<br />
+If the value is not a valid <code>Double</code>, <code>ValueError</code> will raised.  </p>
 <h4 id="fn-replaceneedle-string-new-string-string">fn replace(needle: String, new: String): String`<a class="headerlink" href="#fn-replaceneedle-string-new-string-string" title="Permanent link">&para;</a></h4>
 <p>Create a new <code>String</code> consisting of every <code>needle</code> replaced with <code>new</code>.</p>
 <h4 id="fn-rstripto_strip-string-string">fn rstrip(to_strip: String): String<a class="headerlink" href="#fn-rstripto_strip-string-string" title="Permanent link">&para;</a></h4>
