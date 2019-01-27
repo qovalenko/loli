@@ -1,5 +1,9 @@
-![logo](loli.png)
-## Embedded programming language [![Build Status](https://travis-ci.org/txlyre/loli.svg?branch=master)](https://travis-ci.org/txlyre/loli)
+<img height="150" align="left" style="float: left; margin: 0 10px 0 0;" alt="Loli logo" src="https://raw.githubusercontent.com/loli-foundation/loli/master/loli.png">
+
+## Loli
+Embedded programming language 
+
+[![Build Status](https://travis-ci.org/txlyre/loli.svg?branch=master)](https://travis-ci.org/txlyre/loli)
 
 ```rust
 fn range(start: Integer, end: *Integer = -1): List[Integer]
@@ -17,12 +21,12 @@ fn range(start: Integer, end: *Integer = -1): List[Integer]
 }
 ```
 
-# Make everything, it will work everywhere
+## Make everything, it will work everywhere
 Loli applications can run in any operation system and architecture. It can be embedded into HTML code and be used to make wonderfull websites. 
 
 Write once. Run everywhere!
 
-## Building
+## Building from sources
 
 Compiling depends ``make`` and ``CMake`` 3.6 or later
 
@@ -39,6 +43,4 @@ Documentation is available at https://loli-foundation.github.io/loli/
 
 ## Examples
 
-- Simple OpenGL application <https://github.com/loli-foundation/LoliGL#example-creating-window>
-- Brainfuck interpreter <http://txlyre.ml/files/loli/examples/bf.li>
-- Text fucker <http://txlyre.ml/files/loli/examples/text_fucker.li>
+You can find examples at <https://github.com/loli-foundation/loli-examples>
