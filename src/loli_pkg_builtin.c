@@ -2224,12 +2224,10 @@ void loli_builtin_String_lstrip(loli_state *s)
 
 void loli_builtin_String_to_d(loli_state *s)
 {
-    char *input = loli_arg_string_raw(s, 0);
-    
     double number;
     int exponent;
     int negative;
-    char *p = input;
+    char *p = loli_arg_string_raw(s, 0);
     double p10;
     int n;
     int num_digits;
@@ -2268,7 +2266,7 @@ void loli_builtin_String_to_d(loli_state *s)
     }
 
     if (num_digits == 0) {
-        loli_ValueError(s, "Invalid Double literal: '%s'", input);
+        loli_ValueError(s, "Invalid Double literal: '%s'", p);
         return;
     }
 
@@ -2295,7 +2293,7 @@ void loli_builtin_String_to_d(loli_state *s)
     }
 
     if (exponent < DBL_MIN_EXP  || exponent > DBL_MAX_EXP) {
-        loli_ValueError(s, "Invalid Double literal: '%s'", input);
+        loli_ValueError(s, "Invalid Double literal: '%s'", p);
         return;
     }
 
@@ -2315,7 +2313,7 @@ void loli_builtin_String_to_d(loli_state *s)
     }
 
     if (number == HUGE_VAL) {
-        loli_ValueError(s, "Invalid Double literal: '%s'", input);
+        loli_ValueError(s, "Invalid Double literal: '%s'", p);
         return;
     }
 
