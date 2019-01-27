@@ -2,6 +2,8 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#include <float.h>
+#include <math.h>
 
 #include "loli.h"
 
@@ -136,6 +138,7 @@ const char *loli_builtin_info_table[] = {
     ,"m\0len\0(String): Integer" 
     ,"m\0lstrip\0(String,String): String"
     ,"m\0to_i\0(String): Integer"
+    ,"m\0to_d\0(String): Double"
     ,"m\0replace\0(String,String,String): String"
     ,"m\0rstrip\0(String,String): String"
     ,"m\0slice\0(String,*Integer,*Integer): String"
@@ -177,9 +180,9 @@ const char *loli_builtin_info_table[] = {
 #define Result_OFFSET 100
 #define RuntimeError_OFFSET 107
 #define String_OFFSET 109
-#define Tuple_OFFSET 130
-#define ValueError_OFFSET 131
-#define toplevel_OFFSET 133
+#define Tuple_OFFSET 131
+#define ValueError_OFFSET 132
+#define toplevel_OFFSET 134
 void loli_builtin_Boolean_to_i(loli_state *);
 void loli_builtin_Boolean_to_s(loli_state *);
 void loli_builtin_Byte_to_i(loli_state *);
@@ -276,6 +279,7 @@ void loli_builtin_String_char_at(loli_state *);
 void loli_builtin_String_len(loli_state *);
 void loli_builtin_String_lstrip(loli_state *);
 void loli_builtin_String_to_i(loli_state *);
+void loli_builtin_String_to_d(loli_state *);
 void loli_builtin_String_replace(loli_state *);
 void loli_builtin_String_rstrip(loli_state *);
 void loli_builtin_String_slice(loli_state *);
@@ -407,8 +411,7 @@ loli_call_entry_func loli_builtin_call_table[] = {
     NULL,
     loli_builtin_String_format,
     loli_builtin_String_ends_with,
-    loli_builtin_String_find,
-    
+    loli_builtin_String_find,    
     loli_builtin_String_is_alnum,
     loli_builtin_String_is_alpha,
     loli_builtin_String_is_digit,
@@ -418,6 +421,7 @@ loli_call_entry_func loli_builtin_call_table[] = {
     loli_builtin_String_len,
     loli_builtin_String_lstrip,
     loli_builtin_String_to_i,
+    loli_builtin_String_to_d,
     loli_builtin_String_replace,
     loli_builtin_String_rstrip,
     loli_builtin_String_slice,
@@ -2216,6 +2220,106 @@ void loli_builtin_String_lstrip(loli_state *s)
 
     loli_push_string_sized(s, raw, size - copy_from);
     loli_return_top(s);
+}
+
+void loli_builtin_String_to_d(loli_state *s)
+{
+    char *input = loli_arg_string_raw(s, 0);
+    
+    double number;
+    int exponent;
+    int negative;
+    char *p = input;
+    double p10;
+    int n;
+    int num_digits;
+    int num_decimals;
+
+    while (isspace(*p)) p++;
+
+    negative = 0;
+    switch (*p) {
+      case '-': negative = 1;
+      case '+': p++;
+    }
+
+    number = 0.;
+    exponent = 0;
+    num_digits = 0;
+    num_decimals = 0;
+
+    while (isdigit(*p)) {
+        number = number * 10. + (*p - '0');
+        p++;
+        num_digits++;
+    }
+
+    if (*p == '.') {
+        p++;
+
+        while (isdigit(*p)) {
+            number = number * 10. + (*p - '0');
+            p++;
+            num_digits++;
+            num_decimals++;
+        }
+
+        exponent -= num_decimals;
+    }
+
+    if (num_digits == 0) {
+        loli_ValueError(s, "Invalid Double literal: '%s'", input);
+        return;
+    }
+
+    if (negative) number = -number;
+
+    if (*p == 'e' || *p == 'E') {
+        negative = 0;
+        switch (*++p) {
+            case '-': negative = 1;   // Fall through to increment pos
+            case '+': p++;
+        }
+
+        n = 0;
+        while (isdigit(*p)) {
+            n = n * 10 + (*p - '0');
+            p++;
+        }
+
+        if (negative) {
+            exponent -= n;
+        } else {
+            exponent += n;
+        }
+    }
+
+    if (exponent < DBL_MIN_EXP  || exponent > DBL_MAX_EXP) {
+        loli_ValueError(s, "Invalid Double literal: '%s'", input);
+        return;
+    }
+
+    p10 = 10.;
+    n = exponent;
+    if (n < 0) n = -n;
+    while (n) {
+        if (n & 1) {
+            if (exponent < 0) {
+                number /= p10;
+            } else {
+                number *= p10;
+            }
+        }
+        n >>= 1;
+        p10 *= p10;
+    }
+
+    if (number == HUGE_VAL) {
+        loli_ValueError(s, "Invalid Double literal: '%s'", input);
+        return;
+    }
+
+    loli_return_double(s, number);
 }
 
 void loli_builtin_String_to_i(loli_state *s)
