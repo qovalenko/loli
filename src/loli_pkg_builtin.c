@@ -2316,6 +2316,11 @@ void loli_builtin_String_to_d(loli_state *s)
         loli_ValueError(s, "Invalid Double literal: '%s'", p);
         return;
     }
+    
+    if (*p != '\0') {
+        loli_ValueError(s, "Invalid Double literal: '%s'", p);
+        return;        
+    }
 
     loli_return_double(s, number);
 }
