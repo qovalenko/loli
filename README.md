@@ -3,7 +3,7 @@
 ## Loli
 Embedded programming language 
 
-[![Build Status](https://travis-ci.org/txlyre/loli.svg?branch=master)](https://travis-ci.org/txlyre/loli)
+[![Build Status](https://travis-ci.org/loli-foundation/loli.svg?branch=master)](https://travis-ci.org/loli-foundation/loli)
 
 ```rust
 fn range(start: Integer, end: *Integer = -1): List[Integer]
