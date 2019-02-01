@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s -O2")
 
 set(LOLI_MAJOR "0")
-set(LOLI_MINOR "7")
+set(LOLI_MINOR "8")
 add_definitions(-DLOLI_VERSION="${LOLI_MAJOR}.${LOLI_MINOR}")
 
 file(GLOB_RECURSE LOLI_SRC src/*.c src/*.h)
