@@ -153,7 +153,7 @@ const char *loli_builtin_info_table[] = {
     ,"m\0<new>\0(String): ValueError"
     ,"F\0sayln\0[A](A...)"
     ,"F\0say\0[A](A...)"
-    ,"F\0input\0(*String): ByteString"
+    ,"F\0input\0(String...): ByteString"
     ,"F\0range\0(Integer, *Integer): List[Integer]"
     ,"F\0calltrace\0: List[String]"
     ,"R\0stdin\0File"
